@@ -24,8 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {/* test layout */}
+        {/* might need to conditionally render layouts based on url */}
+        <div className="flex h-dvh w-screen flex-col">
+          <div className="mt-14 flex h-[calc(100vh-56px)] min-h-67.5 w-full flex-col items-center justify-center">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
