@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
 @import "tailwindcss";
 @source "../components/**/*.tsx";
 @source "../app/**/*.tsx";
-=======
-@import "tailwindcss";
->>>>>>> Stashed changes

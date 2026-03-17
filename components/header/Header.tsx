@@ -22,15 +22,20 @@ const Header: React.FC<IHeader> = ({ isMain = false }) => {
 
         // sticky top-0 z-40
         <header className={`${isMain ? 'bg-white shadow-sm ticky top-0 z-40' : 'bg-white shadow-sm'}`}>
-            <div className="flex items-center justify-between">
-                <HeaderLogo />
-                <Button
-                    variant='primary'
-                    content='Plan a trip'
-                />
+            <div
+                className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'
+            >
+                <div className="flex items-center justify-between">
+                    <HeaderLogo />
+                    <Button
+                        variant='primary'
+                        content='Plan a trip'
+                    />
+
+                </div>
 
             </div>
-            {/* </div> */}
+
         </header>
 
     )
