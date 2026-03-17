@@ -8,9 +8,8 @@ const Card = () => {
     return (
         <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden cursor-pointer " >
             {/* we gonna use map function here */}
-
-            <CardImage imageUrl={''} imageAlt={''} />
-            <CardContent countryName={''} countryCapital={''} countryPopulation={''} countryContinent={''} />
+            <CardImage imageUrl={'https://flagcdn.com/w320/au.png'} imageAlt={''} isModal={false} />
+            <CardContent countryName={'asd'} countryCapital={'asdads'} countryPopulation={'asdasd'} countryContinent={'asdsad'} isModal={false} />
         </div>
     )
 }

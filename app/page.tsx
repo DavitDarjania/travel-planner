@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import Animated from "@/components/buttons/Animated.button";
 import Hollow from "@/components/buttons/Hollow.button";
 import HowCard from "@/components/cards/How.card";
@@ -68,6 +69,103 @@ export default function Home() {
               <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
             </svg>
           </LandingCard>
+=======
+// import Header from "@/components/header/page";
+import Button from "@/components/button/Button";
+import Card from "@/components/card/Card";
+import Header from "@/components/header/Header";
+import Modal from "@/components/modal/Modal";
+// import Image from "next/image";
+
+export default function Home() {
+  return (
+    <>
+      header
+      <Header isMain={false} />
+      card
+      <Card />
+      modal
+      <Modal />
+      <Button
+        variant="transparent"
+        content="learn more"
+
+      />
+
+      <Button
+        variant="secondary"
+        content="explore places"
+
+      />
+
+      <Button
+        variant="favourites"
+        content={<>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeUNhcmQudHN4QDE4NjoxMg"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
+        </>}
+      // content="explore places"
+
+      />
+      <Button
+        variant="add"
+        content={<>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeUNhcmQudHN4QDE5MzoxNA"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+        </>}
+      // content="explore places"
+      />
+      <Button
+        variant="modal_favourite"
+        content={
+          <>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeU1vZGFsLnRzeEAxMTU6MjI"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path></svg>
+            <span data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeU1vZGFsLnRzeEAxMTY6MjI">Add to Favorites</span>
+          </>
+
+        }
+
+      />
+      <Button
+        variant="modal_add"
+        content={
+          <>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeU1vZGFsLnRzeEAxMjM6MjI"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+            <span data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeU1vZGFsLnRzeEAxMTY6MjI">Add to Trips</span>
+          </>
+
+        }
+
+
+      />
+
+      <Button
+        variant="save"
+        content={
+          <>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDIyNjozMg"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg>
+            <span data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDIyNzozMg" data-yw-t="true">Save Trip</span>
+          </>
+        }
+      />
+
+      <Button
+        variant="clear"
+        content={
+          <>
+            clear all
+          </>
+        }
+      />
+
+      <Button
+        variant="delete"
+        content={
+          <>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 lucide-trash-2 h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDY0Ojg"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </>
+        }
+      />
+    </>
+>>>>>>> Stashed changes
 
           <LandingCard
             iconBg="purple"
