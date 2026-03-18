@@ -30,10 +30,6 @@ export default function Home() {
               variant="transparent"
               content={"Learn more"}
             />
-            <Button
-              variant="transparent"
-              content={"Learn more"}
-            />
           </div>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">

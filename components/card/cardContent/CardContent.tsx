@@ -5,7 +5,7 @@ import CardTag from './cardTag/CardTag'
 interface ICardContent {
     countryName: string
     countryCapital: string
-    countryPopulation: string
+    countryPopulation: number
     countryContinent: string
     isModal?: boolean
 }
@@ -303,7 +303,7 @@ const CardContent: React.FC<ICardContent> = ({ countryName, countryCapital, coun
                     </>
                     :
                     <>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1" >Argentina</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-1" >{countryName}</h3>
                         <div className="space-y-2 text-sm text-gray-600" >
                             <div className="flex items-center space-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-map-pin h-4 w-4 flex-shrink-0" aria-hidden="true" >
@@ -323,7 +323,7 @@ const CardContent: React.FC<ICardContent> = ({ countryName, countryCapital, coun
                                     <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                                     <circle cx="9" cy="7" r="4"></circle>
                                 </svg>
-                                <span >{countryPopulation} people</span>
+                                <span >{countryPopulation}M people</span>
                             </div>
                         </div>
                         {/* <CardTag /> */}

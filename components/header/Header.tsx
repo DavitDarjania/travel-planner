@@ -8,7 +8,7 @@ import HeaderLogo from './headerLogo/HeaderLogo'
 // import Card from '../card/page'
 import Card from '../card/Card'
 // import { usePathname } from 'next/navigation'
-
+import Link from 'next/link'
 interface IHeader {
     isMain: boolean
 }
@@ -27,15 +27,15 @@ const Header: React.FC<IHeader> = ({ isMain = false }) => {
             >
                 <div className="flex items-center justify-between">
                     <HeaderLogo />
+
+                    {/* <Link href={`${isMain ? '/plan_page' : ''}`}> */}
                     <Button
                         variant='primary'
                         content='Plan a trip'
                     />
-
+                    {/* </Link> */}
                 </div>
-
             </div>
-
         </header>
 
     )
