@@ -1,6 +1,4 @@
 import Button from "@/components/button/Button";
-import Animated from "@/components/buttons/Animated.button";
-import Hollow from "@/components/buttons/Hollow.button";
 import HowCard from "@/components/cards/How.card";
 import LandingCard from "@/components/cards/Landing.card";
 import Header from "@/components/header/Header";
@@ -10,7 +8,6 @@ export default function Home() {
     <div className="bg-[rgba(59,131,246,0.09)]">
       <Header isMain={false} />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-screen">
-
         <section>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 text-center">
             Plan Your Perfect <br />
@@ -22,18 +19,9 @@ export default function Home() {
             just a click away.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button
-              variant="secondary"
-              content={"Explore places"}
-            />
-            <Button
-              variant="transparent"
-              content={"Learn more"}
-            />
-            <Button
-              variant="transparent"
-              content={"Learn more"}
-            />
+            <Button variant="secondary" content={"Explore places"} />
+            <Button variant="transparent" content={"Learn more"} />
+            <Button variant="transparent" content={"Learn more"} />
           </div>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
