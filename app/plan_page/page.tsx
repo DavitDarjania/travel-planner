@@ -1,17 +1,24 @@
+"use client"
 import { client } from '@/client/client'
 import Providers from '@/client/provider'
-import Card from '@/components/card/Card'
+// import Card from '@/components/card/Card'
 import Header from '@/components/header/Header'
 import TestModal from '@/components/modal/TestModal'
 import StoreProvider from '../StoreProvider'
+import CardImage from '@/components/card/cardImage/CardImage'
+import CardContent from '@/components/card/cardContent/CardContent'
+import Link from 'next/link'
+import { ICardContent } from '@/types/CardContent.interface'
+import Card from '@/components/card/Card'
 // import React from 'react'
+
+
 const PlanPage = () => {
 
   return (
 
     <>
       <Header isMain={false} />
-      {/* <TestModal /> */}
       <main
         className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300 '
       >
@@ -22,8 +29,8 @@ const PlanPage = () => {
             </Providers>
           </StoreProvider>
         </div>
-
       </main>
+      <div id='headlessui-portal-root'></div>
     </>
 
   )

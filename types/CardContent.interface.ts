@@ -1,20 +1,34 @@
 export interface ICardContent {
-    data: [
-        name: {
-            common: string
-        },
-        capital: [
-            string
-        ],
-        subregion: string,
-        population: number,
-        flag: {
-            png: string
-        },
+    
+
+    name: {
+        common: string,
+        official: string
+    },
+    capital: [
+        string
+    ],
+    subregion: string,
+    population: number,
+    flag: {
+        png: string
+    },
+    currencies: [
+        {
+            code: string,
+            name: string,
+            symbol: Symbol
+        }
+    ],
+    languages: [
+        {
+            name: string
+        }
+    ],
+    area: number,
+    timezones: [
+        string
     ]
-
-    // isModal?: boolean
-
 }
 
 

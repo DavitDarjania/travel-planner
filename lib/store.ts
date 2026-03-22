@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import cardReducer from '@/features/cardSlice'
-// import { cardSlice } from '@/features/cardSlice'
+import tripReducer from '@/features/tripsSlice'
+// import { cardSlice } from '@/feat    ures/cardSlice'
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
-            data_update: cardReducer
+            data_update: cardReducer,
+            plan_trip: tripReducer
         }
     })
 }

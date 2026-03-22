@@ -279,7 +279,7 @@ const CardContent: React.FC<ICardContent> = ({ countryName, countryCapital, coun
                                         stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        className="lucide lucide-globe h-5 w-5 text-teal-500 mt-0.5 flex-shrink-0"
+                                        className="lucide lucide-globe h-5 w-5 text-teal-500 mt-0.5 shrink-0"
                                         aria-hidden="true"
                                         data-yw="c3JjL2NvbXBvbmVudHMvQ291bnRyeU1vZGFsLnRzeEAxOTU6MjQ"
                                     >

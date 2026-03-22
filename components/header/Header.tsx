@@ -32,6 +32,9 @@ const Header: React.FC<IHeader> = ({ isMain = false }) => {
                     <Button
                         variant='primary'
                         content='Plan a trip'
+                        onClick={() => {
+                            console.log('open sidebar')
+                        }}
                     />
                     {/* </Link> */}
                 </div>
