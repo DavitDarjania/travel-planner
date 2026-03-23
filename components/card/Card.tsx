@@ -52,18 +52,13 @@ const Card = () => {
           <div
             draggable
             onDragStart={(e) => {
+              // console.log(flag)
               e.dataTransfer.setData(
                 "country",
                 JSON.stringify({
                   flag: { png },
-                  name: { common, official },
+                  name: { common },
                   subregion,
-                  capital,
-                  population,
-                  currencies,
-                  languages,
-                  timezones,
-                  area,
                 }),
               );
             }}

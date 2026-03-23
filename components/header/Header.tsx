@@ -7,16 +7,15 @@ import Button from "../button/Button";
 import HeaderLogo from "./headerLogo/HeaderLogo";
 // import Card from '../card/page'
 import Card from "../card/Card";
-// import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+
 interface IHeader {
   isMain: boolean;
   onOpen?: () => void;
 }
 
 const Header: React.FC<IHeader> = ({ isMain = false, onOpen }) => {
-  // const path = usePathname()
   const pathname = usePathname();
   const router = useRouter();
 

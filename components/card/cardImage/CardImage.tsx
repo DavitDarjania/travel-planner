@@ -28,9 +28,13 @@ const CardImage: React.FC<ICardImage> = ({
   const favourite_cards: string[] = useAppSelector(
     (state: RootState) => state.data_update.favourites,
   );
+
   const current_trip: string[] = useAppSelector(
     (state: RootState) => state.plan_trip.current_trips,
   );
+
+
+  // console.log('cardimage current trip', current_trip)
 
   const dispatch = useAppDispatch();
 
@@ -90,7 +94,7 @@ const CardImage: React.FC<ICardImage> = ({
             e.stopPropagation();
             dispatch(
               add_current_trips({
-                flag: imageUrl,
+                flag: { png: imageUrl },
                 country_name: imageAlt,
                 subregion: subRegion,
               }),

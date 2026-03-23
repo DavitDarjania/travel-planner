@@ -8,10 +8,19 @@ import Card from "@/components/card/Card";
 import SideBar from "@/components/sideBar/SideBar";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import SearchForm from "@/components/forms/Search.form";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { createPortal } from "react-dom";
 // import React from 'react'
 
 const PlanPage = () => {
+
+  // const dispatch = useAppDispatch()
+
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
+
+
+
   return (
     <StoreProvider>
       <Providers>
@@ -19,6 +28,7 @@ const PlanPage = () => {
           <div className="flex-1 transition-all duration-300 overflow-auto">
             <Header isMain={false} onOpen={() => setIsOpenSidebar(true)} />
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300">
+              <SearchForm />
               <div className="grid gap-6 transition-all duration-300 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <Card />
               </div>
@@ -27,6 +37,7 @@ const PlanPage = () => {
           </div>
           <AnimatePresence>
             {isOpenSidebar && (
+              
               <SideBar
                 onOpen={() => setIsOpenSidebar(true)}
                 onClose={() => setIsOpenSidebar(false)}
