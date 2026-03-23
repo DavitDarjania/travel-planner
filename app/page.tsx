@@ -1,6 +1,4 @@
 import Button from "@/components/button/Button";
-import Animated from "@/components/buttons/Animated.button";
-import Hollow from "@/components/buttons/Hollow.button";
 import HowCard from "@/components/cards/How.card";
 import LandingCard from "@/components/cards/Landing.card";
 import Header from "@/components/header/Header";
