@@ -37,7 +37,6 @@ const PlanPage = () => {
           </div>
           <AnimatePresence>
             {isOpenSidebar && (
-              
               <SideBar
                 onOpen={() => setIsOpenSidebar(true)}
                 onClose={() => setIsOpenSidebar(false)}

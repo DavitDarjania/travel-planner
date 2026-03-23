@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { add_current_trips, clear_all, IPlannedTrips, reorder_trips, save_current_trip_status } from "@/features/tripsSlice";
+import { add_current_trips, clear_all, delete_current_trip, delete_planned_trips, IPlannedTrips, load_trip, reorder_trips, save_current_trip_status } from "@/features/tripsSlice";
 import SidebarCountry from "./SidebarCountry";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
@@ -11,8 +11,9 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import Button from "../button/Button";
-import { current } from "@reduxjs/toolkit";
+// import { current } from "@reduxjs/toolkit";
 import SideBarForm from "./sideBarForm";
+// import { clear } from "console";
 
 interface SideBarProps {
   onOpen: () => void;
@@ -32,10 +33,7 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
 
   const { planned_trips } = useAppSelector((state) => state.plan_trip)
 
-  // console.log(planned_trips)
-  // console.log(planned_trips.map((item) => item.current_trip_data.flag?.png))
-  // console.log('sidebar: ', current_trips)
-  // console.log("here: " + current_trips.);
+  console.log(planned_trips)
 
   return (
     <motion.div
@@ -125,100 +123,33 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
               }}
               className="mb-8 min-h-50 border-2 border-dashed rounded-lg p-4 transition-colors duration-200 border-blue-300 bg-blue-50"
             >
-              <div
-                className="flex items-center justify-between mb-4"
+              <div className="flex items-center justify-between mb-4"
               >
                 <h3
                   className="text-lg font-medium text-gray-900"
-                  data-yw-t="true"
                 >
                   Current Trip
                 </h3>
+                {current_trips.length !== 0 &&
+                  <Button
+                    variant="clear"
+                    onClick={() => {
+                      dispatch(clear_all())
+                    }}
+                    content={
+                      <>
+                        Clear All
+                      </>
+                    }
+                  >
+                  </Button>
+                }
+
               </div>
+
               <div
                 className="text-center py-8 text-gray-500 flex flex-col gap-3"
               >
-                {/* <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg transition-all duration-200 ">
-                    <div className="flex items-center space-x-3">
-                      <div
-                        role="button"
-                        aria-disabled="false"
-                        aria-roledescription="sortable"
-                        aria-describedby="DndDescribedBy-0"
-                        className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 p-1 hover:bg-gray-200 rounded"
-                        data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDQzOjg"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-grip-vertical h-4 w-4"
-                          aria-hidden="true"
-                          data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDQ4OjEw"
-                        >
-                          <circle cx="9" cy="12" r="1"></circle>
-                          <circle cx="9" cy="5" r="1"></circle>
-                          <circle cx="9" cy="19" r="1"></circle>
-                          <circle cx="15" cy="12" r="1"></circle>
-                          <circle cx="15" cy="5" r="1"></circle>
-                          <circle cx="15" cy="19" r="1"></circle>
-                        </svg>
-                      </div>
-                      <img
-                        src="https://flagcdn.com/w320/au.png"
-                        alt="Flag of Australia"
-                        className="w-8 h-6 object-cover rounded border"
-                        data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDUwOjg"
-                      ></img>
-                      <div data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDU1Ojg">
-                        <h4
-                          className="font-medium text-gray-900"
-                          data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDU2OjEw"
-                        >
-                          Australia
-                        </h4>
-                        <p
-                          className="text-sm text-gray-500"
-                          data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDU3OjEw"
-                        >
-                          Oceania
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors duration-200"
-                      data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDYwOjY"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-trash2 lucide-trash-2 h-4 w-4"
-                        aria-hidden="true"
-                        data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDY0Ojg"
-                      >
-                        <path d="M10 11v6"></path>
-                        <path d="M14 11v6"></path>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                        <path d="M3 6h18"></path>
-                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div> */}
                 {current_trips.length > 0 && (
                   <DndContext
                     collisionDetection={closestCenter}
@@ -254,6 +185,7 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                     </SortableContext>
                   </DndContext>
                 )}
+
                 {current_trips.length == 0 && (
                   <div>
                     <svg
@@ -289,45 +221,91 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
             </div>
             {/* {(stage_current_trip_status && current_trips.length != 0) && (<><h1>some div</h1></>)} */}
             {current_trips.length != 0 && (
+              // <SideBarForm />
+              // <>
+              //   {!stage_current_trip_status ?
               <>
-                {stage_current_trip_status ?
-                  <>
-                    <SideBarForm />
-                  </>
-                  :
-                  <Button
-                    variant="save"
-                    content={
-                      <>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-save h-4 w-4"
-                          aria-hidden="true"
-                        >
-                          <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-                          <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
-                          <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
-                        </svg>
-                        <span>Save Trip</span>
-                      </>}
-                    onClick={() => {
-                      dispatch(save_current_trip_status(true))
-                      
-                    }}
-                  >
-                  </Button>
-                }
+                {stage_current_trip_status && <SideBarForm />}
+                <Button
+                  variant="save"
+                  content={
+                    <>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-save h-4 w-4"
+                        aria-hidden="true"
+                      >
+                        <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+                        <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
+                        <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
+                      </svg>
+                      <span>Save Trip</span>
+                    </>
+                  }
+                  onClick={() => {
+                    dispatch(save_current_trip_status(true))
+                    console.log('save button visible', stage_current_trip_status)
+                  }}
+                >
+                </Button>
 
               </>
+
+              //     :
+              //     <SideBarForm />
+
+              //   }
+              // </>
+
+              // <>
+              //   {stage_current_trip_status ?
+              //     <>
+              //       <SideBarForm />
+              //     </>
+              //     :
+              //     <Button
+              //       variant="save"
+              //       content={
+              //         <>
+              //           <svg
+              //             xmlns="http://www.w3.org/2000/svg"
+              //             width="24"
+              //             height="24"
+              //             viewBox="0 0 24 24"
+              //             fill="none"
+              //             stroke="currentColor"
+              //             strokeWidth="2"
+              //             strokeLinecap="round"
+              //             strokeLinejoin="round"
+              //             className="lucide lucide-save h-4 w-4"
+              //             aria-hidden="true"
+              //           >
+              //             <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+              //             <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
+              //             <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
+              //           </svg>
+              //           <span>Save Trip</span>
+              //         </>}
+              //       onClick={() => {
+              //         dispatch(save_current_trip_status(true))
+
+              //       }}
+              //     >
+              //     </Button>
+              //   }
+
+              // </>
             )}
+
+
 
 
             <div>
@@ -376,16 +354,29 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                 </>
                 :
                 <>
+                  <h3
+                    className="text-lg font-medium text-gray-900 mb-4"
+                    data-yw-t="true"
+                  >
+                    Saved Trips
+                  </h3>
                   <div className="space-y-3">
                     {planned_trips.map((item) => (
-                      <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3NTozMg">
+                      <div
+                        key={item.plan_name}
+                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3NTozMg">
                         <div className="flex items-center justify-between mb-2" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3OTozNA">
                           <h4 className="font-medium text-gray-900" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4MDozNg">{item.plan_name}</h4>
                           <Button
                             variant="delete"
+                            onClick={() => {
+                              // console.log(item.plan_name),
+                              dispatch(delete_planned_trips(item.plan_name))
+                            }
+                            }
                             content={
                               <>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash2 lucide-trash-2 h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4NTozOA">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash2 lucide-trash-2 h-4 w-4" aria-hidden="true" >
                                   <path d="M10 11v6"></path>
                                   <path d="M14 11v6"></path>
                                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -401,9 +392,14 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                         <p className="text-sm text-gray-500 mb-3" >{item.current_trip_data.length} • {item.creation_date}</p>
                         <div className="flex flex-col">
                           <div className="flex space-x-2 mb-3">
-                            <img src={item.current_trip_data.flag?.png} alt={item.current_trip_data.country_name} className="w-6 h-4 object-cover rounded border space-x-2" />
+                            {/* <img src={item.current_trip_data.flag?.png} alt={item.current_trip_data.country_name} className="w-6 h-4 object-cover rounded border space-x-2" /> */}
                           </div>
-                          <button className="w-full px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">Load Trip</button>
+                          <button
+                            onClick={() => dispatch(load_trip)}
+                            className="w-full px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200"
+                          >
+                            Load Trip
+                          </button>
                         </div>
                       </div>
                     ))}

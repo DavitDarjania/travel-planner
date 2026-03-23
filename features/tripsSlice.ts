@@ -28,10 +28,10 @@ const initialState: ITrips = {
   stage_current_trip_status: false,
   current_trip_name_set: '',
   current_trips: [],
-  planned_trips:
-    typeof window !== "undefined" && localStorage.getItem("planned_trips")
-      ? JSON.parse(localStorage.getItem("planned_trips")!)
-      : [],
+  planned_trips: []
+    // typeof window !== "undefined" && localStorage.getItem("planned_trips")
+    //   ? JSON.parse(localStorage.getItem("planned_trips")!)
+    //   : [],
 };
 
 const tripsSlice = createSlice({
@@ -100,12 +100,14 @@ const tripsSlice = createSlice({
     // needs to be tested
     delete_planned_trips: (state, action) => {
       const arg = action.payload;
-      const deleted_index = state.planned_trips.find(
-        (id) => id.plan_name == arg.plan_name,
-      );
-      state.planned_trips = state.planned_trips.filter(
-        (id) => id !== deleted_index,
-      );
+      // const deleted_index = state.planned_trips.find(
+      //   (id) => id.plan_name == arg.plan_name,
+      // );
+      // state.planned_trips = state.planned_trips.filter(
+      //   (id) => id !== deleted_index,
+      // );
+      state.planned_trips = state.planned_trips.filter((id) => id.plan_name !== arg)
+      console.log(state.planned_trips)
     },
 
     // it should receive saved element's data and display it in the current trip

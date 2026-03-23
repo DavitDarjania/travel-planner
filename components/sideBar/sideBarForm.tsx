@@ -20,7 +20,7 @@ const sideBarForm = () => {
 
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 mb-4">
             <input type="text"
                 placeholder="Enter trip name..."
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

@@ -82,8 +82,11 @@ export default function SidebarCountry({
         </div>
         <Button
           variant='delete'
-          onClick={() => dispatch(delete_current_trip({ country_name }))}
-          // className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors duration-200"
+          onClick={
+            () =>
+              dispatch(delete_current_trip({ country_name }))
+            // console.log(country_name)
+          }
           content={<>
             <svg
               xmlns="http://www.w3.org/2000/svg"
