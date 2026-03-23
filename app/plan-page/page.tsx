@@ -14,12 +14,9 @@ import { createPortal } from "react-dom";
 // import React from 'react'
 
 const PlanPage = () => {
-
   // const dispatch = useAppDispatch()
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(true);
-
-
 
   return (
     <StoreProvider>
@@ -27,8 +24,9 @@ const PlanPage = () => {
         <div className="flex h-screen overflow-hidden">
           <div className="flex-1 transition-all duration-300 overflow-auto">
             <Header isMain={false} onOpen={() => setIsOpenSidebar(true)} />
+            <SearchForm />
+
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300">
-              <SearchForm />
               <div className="grid gap-6 transition-all duration-300 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 <Card />
               </div>
@@ -37,7 +35,6 @@ const PlanPage = () => {
           </div>
           <AnimatePresence>
             {isOpenSidebar && (
-              
               <SideBar
                 onOpen={() => setIsOpenSidebar(true)}
                 onClose={() => setIsOpenSidebar(false)}

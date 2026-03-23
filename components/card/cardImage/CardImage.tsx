@@ -33,7 +33,6 @@ const CardImage: React.FC<ICardImage> = ({
     (state: RootState) => state.plan_trip.current_trips,
   );
 
-
   // console.log('cardimage current trip', current_trip)
 
   const dispatch = useAppDispatch();

@@ -1,7 +1,21 @@
-import axios from 'axios'
-import { API_URL } from './apiUrl'
+import axios from "axios";
+import { BASE, FIELDS } from "./apiUrl";
 
-const fetchData = axios.create({
-    baseURL: API_URL
-})
-export default fetchData
+interface queryParams {
+  name?: string;
+  continent?: string;
+  favorites?: string;
+}
+
+const fetchData = async ({ name }: queryParams) => {
+  if (name) {
+    const res = await fetch(`${BASE}/name/${name}${FIELDS}`);
+    const data = res.json();
+    return data;
+  } else {
+    const res = await fetch(`${BASE}/all${FIELDS}`);
+    const data = res.json();
+    return data;
+  }
+};
+export default fetchData;

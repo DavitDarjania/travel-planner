@@ -4,7 +4,7 @@ import { FilterInput, SearchInput } from "./Search.input";
 export default function SearchForm() {
   return (
     <form
-      className="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"
+      className="bg-white mt-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"
       action=""
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
