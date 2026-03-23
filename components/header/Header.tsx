@@ -12,7 +12,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 interface IHeader {
   isMain: boolean;
-  onOpen: () => void;
+  onOpen?: () => void;
 }
 
 const Header: React.FC<IHeader> = ({ isMain = false, onOpen }) => {
@@ -21,7 +21,7 @@ const Header: React.FC<IHeader> = ({ isMain = false, onOpen }) => {
   const router = useRouter();
 
   const handleSideBarAndRoute = () => {
-    if (pathname === "/plan-page") {
+    if (pathname === "/plan-page" && !!onOpen) {
       onOpen();
     } else {
       router.push("/plan-page");
