@@ -1,14 +1,18 @@
-// "use client"
-import fetchData from "@/api/fetchData"
-import { useQuery } from "@tanstack/react-query"
-import { ICardContent } from "@/types/CardContent.interface"
+"use client";
+import fetchData from "@/api/fetchData";
+import { useQuery } from "@tanstack/react-query";
+import { ICardContent } from "@/types/CardContent.interface";
 
-const useFetchCards = () => {
-    const result = useQuery<ICardContent>({
-        queryKey: ['cards'],
-        queryFn: fetchData
-    })
-    return result
+interface useFetchCardsProps {
+  name?: string;
 }
 
-export default useFetchCards
+const useFetchCards = ({ name }: useFetchCardsProps) => {
+  const result = useQuery<ICardContent>({
+    queryKey: ["cards", name],
+    queryFn: () => fetchData({ name }),
+  });
+  return result;
+};
+
+export default useFetchCards;

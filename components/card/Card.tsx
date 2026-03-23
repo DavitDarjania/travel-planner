@@ -1,3 +1,4 @@
+"use client";
 import CardImage from "./cardImage/CardImage";
 import CardContent from "./cardContent/CardContent";
 
@@ -14,11 +15,14 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import useFetchCards from "@/hooks/useFetchCards";
 
 import { createPortal } from "react-dom";
+import { useSearchParams } from "next/navigation";
 
 const Card = () => {
+  const searchParams = useSearchParams();
+  const name = searchParams.get("search") ?? "";
   // react query
-  const { data, isLoading, error } = useFetchCards();
-
+  const { data, isLoading, error } = useFetchCards({ name });
+  // console.log(data);
   // redux store
   const openModal = useAppSelector(
     (state: RootState) => state.data_update.isOpen,
@@ -37,62 +41,68 @@ const Card = () => {
   return (
     <>
       {/* we gonna use map function here */}
-      {data?.data?.map(
-        ({
-          flag: { png },
-          name: { common, official },
-          subregion,
-          capital,
-          population,
-          currencies,
-          languages,
-          timezones,
-          area,
-        }: ICardContent) => (
-          <div
-            draggable
-            onDragStart={(e) => {
-              // console.log(flag)
-              e.dataTransfer.setData(
-                "country",
-                JSON.stringify({
-                  flag: { png },
-                  name: { common },
-                  subregion,
-                }),
-              );
-            }}
-            onClick={() => {
-              // passing fetched data as action.payload for global store to
-              // then have access it in the modal component
-              (dispatch(
-                add_data({
-                  flag: { png },
-                  name: { common, official },
-                  subregion,
-                  capital,
-                  population,
-                  currencies,
-                  languages,
-                  timezones,
-                  area,
-                }),
-              ),
-                dispatch(modal_open(true)));
-            }}
-            key={common}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden cursor-pointer "
-          >
-            <CardImage imageUrl={png} imageAlt={common} subRegion={subregion} />
-            <CardContent
-              countryName={common}
-              countryCapital={capital.toString()}
-              countryPopulation={population / 10000}
-              countryContinent={subregion}
-            />
-          </div>
-        ),
-      )}
+      {data &&
+        !!!data.message &&
+        data?.map(
+          ({
+            flag: { png },
+            name: { common, official },
+            subregion,
+            capital,
+            population,
+            currencies,
+            languages,
+            timezones,
+            area,
+          }: ICardContent) => (
+            <div
+              draggable
+              onDragStart={(e) => {
+                // console.log(flag)
+                e.dataTransfer.setData(
+                  "country",
+                  JSON.stringify({
+                    flag: { png },
+                    name: { common },
+                    subregion,
+                  }),
+                );
+              }}
+              onClick={() => {
+                // passing fetched data as action.payload for global store to
+                // then have access it in the modal component
+                (dispatch(
+                  add_data({
+                    flag: { png },
+                    name: { common, official },
+                    subregion,
+                    capital,
+                    population,
+                    currencies,
+                    languages,
+                    timezones,
+                    area,
+                  }),
+                ),
+                  dispatch(modal_open(true)));
+              }}
+              key={common}
+              className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden cursor-pointer "
+            >
+              <CardImage
+                imageUrl={png}
+                imageAlt={common}
+                subRegion={subregion}
+              />
+              <CardContent
+                countryName={common}
+                countryCapital={capital.toString()}
+                countryPopulation={population / 10000}
+                countryContinent={subregion}
+              />
+            </div>
+          ),
+        )}
       {openModal &&
         createPortal(
           <Modal />,

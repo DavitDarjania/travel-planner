@@ -1,8 +1,14 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { add_current_trips, clear_all, IPlannedTrips, reorder_trips, save_current_trip_status } from "@/features/tripsSlice";
+import {
+  add_current_trips,
+  clear_all,
+  IPlannedTrips,
+  reorder_trips,
+  save_current_trip_status,
+} from "@/features/tripsSlice";
 import SidebarCountry from "./SidebarCountry";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
@@ -22,21 +28,27 @@ interface SideBarProps {
 export default function SideBar({ onClose, onOpen }: SideBarProps) {
   const dispatch = useAppDispatch();
   // const { current_trips } = useAppSelector((state) => state.plan_trip);
+  const [mounted, setMounted] = useState(false);
+  const current_trips: Array<{
+    country_name: string;
+    flag: string;
+    subregion: string;
+  }> = useAppSelector((state: RootState) => state.plan_trip.current_trips);
 
-  const current_trips: Array<{ country_name: string, flag: string, subregion: string }> = useAppSelector(
-    (state: RootState) => state.plan_trip.current_trips,
+  const { stage_current_trip_status } = useAppSelector(
+    (state) => state.plan_trip,
   );
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-
-  const { stage_current_trip_status } = useAppSelector((state) => state.plan_trip)
-
-  const { planned_trips } = useAppSelector((state) => state.plan_trip)
+  const { planned_trips } = useAppSelector((state) => state.plan_trip);
 
   // console.log(planned_trips)
   // console.log(planned_trips.map((item) => item.current_trip_data.flag?.png))
   // console.log('sidebar: ', current_trips)
   // console.log("here: " + current_trips.);
-
+  if (!mounted) return null;
   return (
     <motion.div
       initial={{ width: 0 }}
@@ -56,24 +68,26 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
             </h2>
             <Button
               variant="close"
-              content={<>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-x h-6 w-6"
-                  aria-hidden="true"
-                >
-                  <path d="M18 6 6 18"></path>
-                  <path d="m6 6 12 12"></path>
-                </svg>
-              </>}
+              content={
+                <>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-x h-6 w-6"
+                    aria-hidden="true"
+                  >
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                  </svg>
+                </>
+              }
               onClick={onClose}
             />
             {/* <button
@@ -99,18 +113,12 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
               </svg>
             </button> */}
           </div>
-          <p
-            className="text-blue-100 text-sm mt-2"
-          >
+          <p className="text-blue-100 text-sm mt-2">
             Drag countries here to add them to your trip
           </p>
         </div>
-        <div
-          className="flex-1 overflow-y-auto"
-        >
-          <div
-            className="px-4 py-6 sm:px-6"
-          >
+        <div className="flex-1 overflow-y-auto">
+          <div className="px-4 py-6 sm:px-6">
             <div
               onDragOver={(e) => e.preventDefault()} // required to allow drop
               onDrop={(e) => {
@@ -125,9 +133,7 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
               }}
               className="mb-8 min-h-50 border-2 border-dashed rounded-lg p-4 transition-colors duration-200 border-blue-300 bg-blue-50"
             >
-              <div
-                className="flex items-center justify-between mb-4"
-              >
+              <div className="flex items-center justify-between mb-4">
                 <h3
                   className="text-lg font-medium text-gray-900"
                   data-yw-t="true"
@@ -135,9 +141,7 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                   Current Trip
                 </h3>
               </div>
-              <div
-                className="text-center py-8 text-gray-500 flex flex-col gap-3"
-              >
+              <div className="text-center py-8 text-gray-500 flex flex-col gap-3">
                 {/* <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg transition-all duration-200 ">
                     <div className="flex items-center space-x-3">
@@ -272,15 +276,10 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                       <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
                       <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    <p
-                      className="font-medium"
-                      data-yw-t="true"
-                    >
+                    <p className="font-medium" data-yw-t="true">
                       Drop countries here
                     </p>
-                    <p
-                      className="text-sm"
-                    >
+                    <p className="text-sm">
                       Drag countries from the list to add them to your trip
                     </p>
                   </div>
@@ -290,11 +289,11 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
             {/* {(stage_current_trip_status && current_trips.length != 0) && (<><h1>some div</h1></>)} */}
             {current_trips.length != 0 && (
               <>
-                {stage_current_trip_status ?
+                {stage_current_trip_status ? (
                   <>
                     <SideBarForm />
                   </>
-                  :
+                ) : (
                   <Button
                     variant="save"
                     content={
@@ -317,22 +316,18 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                           <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
                         </svg>
                         <span>Save Trip</span>
-                      </>}
+                      </>
+                    }
                     onClick={() => {
-                      dispatch(save_current_trip_status(true))
-                      
+                      dispatch(save_current_trip_status(true));
                     }}
-                  >
-                  </Button>
-                }
-
+                  ></Button>
+                )}
               </>
             )}
 
-
             <div>
-              {planned_trips.length == 0 ?
-
+              {planned_trips.length == 0 ? (
                 <>
                   <h3
                     className="text-lg font-medium text-gray-900 mb-4"
@@ -340,9 +335,7 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                   >
                     Saved Trips
                   </h3>
-                  <div
-                    className="text-center py-8 text-gray-500"
-                  >
+                  <div className="text-center py-8 text-gray-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -361,31 +354,49 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                       <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                       <path d="M3 10h18"></path>
                     </svg>
-                    <p
-                      data-yw-t="true"
-                    >
-                      No saved trips
-                    </p>
-                    <p
-                      className="text-sm"
-                      data-yw-t="true"
-                    >
+                    <p data-yw-t="true">No saved trips</p>
+                    <p className="text-sm" data-yw-t="true">
                       Create and save your first trip
                     </p>
                   </div>
                 </>
-                :
+              ) : (
                 <>
                   <div className="space-y-3">
                     {planned_trips.map((item) => (
-                      <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3NTozMg">
-                        <div className="flex items-center justify-between mb-2" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3OTozNA">
-                          <h4 className="font-medium text-gray-900" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4MDozNg">{item.plan_name}</h4>
+                      <div
+                        key={item.creation_date}
+                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                        data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3NTozMg"
+                      >
+                        <div
+                          className="flex items-center justify-between mb-2"
+                          data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3OTozNA"
+                        >
+                          <h4
+                            className="font-medium text-gray-900"
+                            data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4MDozNg"
+                          >
+                            {item.plan_name}
+                          </h4>
                           <Button
                             variant="delete"
                             content={
                               <>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash2 lucide-trash-2 h-4 w-4" aria-hidden="true" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4NTozOA">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="lucide lucide-trash2 lucide-trash-2 h-4 w-4"
+                                  aria-hidden="true"
+                                  data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4NTozOA"
+                                >
                                   <path d="M10 11v6"></path>
                                   <path d="M14 11v6"></path>
                                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -394,22 +405,28 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                                 </svg>
                               </>
                             }
-                          >
-
-                          </Button>
+                          ></Button>
                         </div>
-                        <p className="text-sm text-gray-500 mb-3" >{item.current_trip_data.length} • {item.creation_date}</p>
+                        <p className="text-sm text-gray-500 mb-3">
+                          {item.current_trip_data.length} • {item.creation_date}
+                        </p>
                         <div className="flex flex-col">
                           <div className="flex space-x-2 mb-3">
-                            <img src={item.current_trip_data.flag?.png} alt={item.current_trip_data.country_name} className="w-6 h-4 object-cover rounded border space-x-2" />
+                            <img
+                              src={item.current_trip_data.flag?.png}
+                              alt={item.current_trip_data.country_name}
+                              className="w-6 h-4 object-cover rounded border space-x-2"
+                            />
                           </div>
-                          <button className="w-full px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">Load Trip</button>
+                          <button className="w-full px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200">
+                            Load Trip
+                          </button>
                         </div>
                       </div>
                     ))}
                   </div>
                 </>
-              }
+              )}
             </div>
           </div>
         </div>
