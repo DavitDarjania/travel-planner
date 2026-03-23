@@ -21,7 +21,6 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Button variant="secondary" content={"Explore places"} />
             <Button variant="transparent" content={"Learn more"} />
-            <Button variant="transparent" content={"Learn more"} />
           </div>
         </section>
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
