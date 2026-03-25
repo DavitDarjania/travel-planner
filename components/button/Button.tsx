@@ -1,5 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
+
 // import Link from 'next/link'
 
 // created interface for reusable button
@@ -40,6 +41,7 @@ const Button: React.FC<TButton> = ({
     content,
     onClick
 }) => {
+    
 
     //  `p-2 rounded-full transition-all duration-200 bg-white bg-opacity-80 text-gray-600 hover:bg-red-500 hover:text-white cursor-pointer`
     const buttonClass = clsx(

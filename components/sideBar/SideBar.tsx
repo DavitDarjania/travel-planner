@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { add_current_trips, clear_all, delete_current_trip, delete_planned_trips, IPlannedTrips, load_trip, reorder_trips, save_current_trip_status } from "@/features/tripsSlice";
+import { add_current_trips, clear_all, delete_current_trip, delete_planned_trips, IPlannedTrips, load_trip, open_trip_form, reorder_trips, save_current_trip_status } from "@/features/tripsSlice";
 import SidebarCountry from "./SidebarCountry";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
@@ -13,6 +13,7 @@ import {
 import Button from "../button/Button";
 // import { current } from "@reduxjs/toolkit";
 import SideBarForm from "./sideBarForm";
+import { current } from "@reduxjs/toolkit";
 // import { clear } from "console";
 
 interface SideBarProps {
@@ -30,10 +31,11 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
 
 
   const { stage_current_trip_status } = useAppSelector((state) => state.plan_trip)
+  const { trip_form_status } = useAppSelector((state) => state.plan_trip)
 
   const { planned_trips } = useAppSelector((state) => state.plan_trip)
 
-  console.log(planned_trips)
+  // console.log(planned_trips)
 
   return (
     <motion.div
@@ -219,94 +221,43 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                 )}
               </div>
             </div>
-            {/* {(stage_current_trip_status && current_trips.length != 0) && (<><h1>some div</h1></>)} */}
-            {current_trips.length != 0 && (
-              // <SideBarForm />
-              // <>
-              //   {!stage_current_trip_status ?
+            {trip_form_status && <SideBarForm />}
+            {(current_trips.length != 0) &&
               <>
-                {stage_current_trip_status && <SideBarForm />}
-                <Button
-                  variant="save"
-                  content={
-                    <>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-save h-4 w-4"
-                        aria-hidden="true"
-                      >
-                        <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-                        <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
-                        <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
-                      </svg>
-                      <span>Save Trip</span>
-                    </>
-                  }
-                  onClick={() => {
-                    dispatch(save_current_trip_status(true))
-                    console.log('save button visible', stage_current_trip_status)
-                  }}
-                >
-                </Button>
-
+                {stage_current_trip_status &&
+                  <Button
+                    variant="save"
+                    content={
+                      <>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="lucide lucide-save h-4 w-4"
+                          aria-hidden="true"
+                        >
+                          <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+                          <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
+                          <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
+                        </svg>
+                        <span>Save Trip</span>
+                      </>
+                    }
+                    onClick={() => {
+                      dispatch(save_current_trip_status(false))
+                      dispatch(open_trip_form(true))
+                    }}
+                  >
+                  </Button>
+                }
               </>
-
-              //     :
-              //     <SideBarForm />
-
-              //   }
-              // </>
-
-              // <>
-              //   {stage_current_trip_status ?
-              //     <>
-              //       <SideBarForm />
-              //     </>
-              //     :
-              //     <Button
-              //       variant="save"
-              //       content={
-              //         <>
-              //           <svg
-              //             xmlns="http://www.w3.org/2000/svg"
-              //             width="24"
-              //             height="24"
-              //             viewBox="0 0 24 24"
-              //             fill="none"
-              //             stroke="currentColor"
-              //             strokeWidth="2"
-              //             strokeLinecap="round"
-              //             strokeLinejoin="round"
-              //             className="lucide lucide-save h-4 w-4"
-              //             aria-hidden="true"
-              //           >
-              //             <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
-              //             <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path>
-              //             <path d="M7 3v4a1 1 0 0 0 1 1h7"></path>
-              //           </svg>
-              //           <span>Save Trip</span>
-              //         </>}
-              //       onClick={() => {
-              //         dispatch(save_current_trip_status(true))
-
-              //       }}
-              //     >
-              //     </Button>
-              //   }
-
-              // </>
-            )}
-
-
-
+            }
 
             <div>
               {planned_trips.length == 0 ?
@@ -361,22 +312,21 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
                     Saved Trips
                   </h3>
                   <div className="space-y-3">
-                    {planned_trips.map((item) => (
+                    {planned_trips?.map((item) => (
                       <div
                         key={item.plan_name}
-                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3NTozMg">
-                        <div className="flex items-center justify-between mb-2" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI3OTozNA">
-                          <h4 className="font-medium text-gray-900" data-yw="c3JjL2NvbXBvbmVudHMvVHJpcFBsYW5uZXIudHN4QDI4MDozNg">{item.plan_name}</h4>
+                        className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                        <div className="flex items-center justify-between mb-2" >
+                          <h4 className="font-medium text-gray-900" >{item.plan_name}</h4>
                           <Button
                             variant="delete"
                             onClick={() => {
-                              // console.log(item.plan_name),
-                              dispatch(delete_planned_trips(item.plan_name))
+                              dispatch(delete_planned_trips({ plan_name: item.plan_name }))
                             }
                             }
                             content={
                               <>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-trash2 lucide-trash-2 h-4 w-4" aria-hidden="true" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash2 lucide-trash-2 h-4 w-4" aria-hidden="true" >
                                   <path d="M10 11v6"></path>
                                   <path d="M14 11v6"></path>
                                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
@@ -389,13 +339,18 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
 
                           </Button>
                         </div>
-                        <p className="text-sm text-gray-500 mb-3" >{item.current_trip_data.length} • {item.creation_date}</p>
+                        <p className="text-sm text-gray-500 mb-3" >{item.current_trip_data?.length} • {item.creation_date}</p>
                         <div className="flex flex-col">
                           <div className="flex space-x-2 mb-3">
                             {/* <img src={item.current_trip_data.flag?.png} alt={item.current_trip_data.country_name} className="w-6 h-4 object-cover rounded border space-x-2" /> */}
                           </div>
                           <button
-                            onClick={() => dispatch(load_trip)}
+                            onClick={() => {
+                              // console.log(current_trips)
+                              dispatch(load_trip({ data: item.current_trip_data, plan_name: item.plan_name }))
+                            }
+
+                            }
                             className="w-full px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200"
                           >
                             Load Trip
@@ -410,6 +365,6 @@ export default function SideBar({ onClose, onOpen }: SideBarProps) {
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.div >
   );
 }

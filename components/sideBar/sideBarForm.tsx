@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Button from '../button/Button'
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks'
-import { clear_all, current_trip_name, save_current_trip_status, save_planned_trip } from '@/features/tripsSlice'
+import { clear_all, current_trip_name, open_trip_form, save_current_trip_status, save_planned_trip } from '@/features/tripsSlice'
+import { clear } from 'console'
+import { disableInstantTransitions } from 'framer-motion'
 
 const sideBarForm = () => {
     const [tripName, setTripName] = useState("")
@@ -15,9 +17,9 @@ const sideBarForm = () => {
     const { current_trip_name_set } = useAppSelector((state) => state.plan_trip)
     const { current_trips } = useAppSelector((state) => state.plan_trip)
 
-
-
-
+    const { planned_trips } = useAppSelector((state) => state.plan_trip)
+    console.log('planned trips', planned_trips)
+    // console.log('current trips', current_trips)
 
     return (
         <div className="space-y-3 mb-4">
@@ -35,6 +37,8 @@ const sideBarForm = () => {
                         const date = new Date().toISOString().slice(0, 10).replaceAll("-", "/")
                         dispatch(save_planned_trip({ plan_name: tripName, creation_date: date, current_trip_data: current_trips }))
                         dispatch(clear_all())
+                        dispatch(save_current_trip_status(true))
+                        dispatch(open_trip_form(false))
                     }}
 
                     className={` ${tripName === '' ? 'bg-gray-300 cursor-not-allowed flex-1 px-4 py-2 rounded-lg text-white' : 'flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200'} `}>Save</button>
@@ -46,7 +50,9 @@ const sideBarForm = () => {
                         </>
                     }
                     onClick={() => {
-                        dispatch(save_current_trip_status(false))
+                        dispatch(save_current_trip_status(true))
+                        dispatch(clear_all())
+                        dispatch(open_trip_form(false))
                     }}
                 >
                 </Button>

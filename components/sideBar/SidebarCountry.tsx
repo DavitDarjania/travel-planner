@@ -31,7 +31,7 @@ export default function SidebarCountry({
   return (
     <div ref={setNodeRef} style={style} className="space-y-3">
       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg transition-all duration-200 ">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 text-left">
           <div
             {...attributes}
             {...listeners}
